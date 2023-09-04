@@ -97,7 +97,7 @@ dtb-$(CONFIG_ARCH_LAGOON) += \
 endif
 
 ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-        dtbo-$(CONFIG_ARCH_BENGAL) += \
+        #dtbo-$(CONFIG_ARCH_BENGAL) += \
                 bengal-rumi-overlay.dtbo \
                 bengal-qrd-overlay.dtbo \
                 bengal-idp-overlay.dtbo \
@@ -118,7 +118,7 @@ bengal-idp-2gb-overlay.dtbo-base := bengal-2gb.dtb
 bengal-idp-usbc-1gb-overlay.dtbo-base := bengal-1gb.dtb
 bengal-idp-usbc-2gb-overlay.dtbo-base := bengal-2gb.dtb
 else
-dtb-$(CONFIG_ARCH_BENGAL) += bengal-rumi.dtb \
+#dtb-$(CONFIG_ARCH_BENGAL) += bengal-rumi.dtb \
                 bengal-qrd.dtb \
 		bengal-idp.dtb \
 		bengal-idp-usbc.dtb \
@@ -130,7 +130,7 @@ dtb-$(CONFIG_ARCH_BENGAL) += bengal-rumi.dtb \
 endif
 
 ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-        dtbo-$(CONFIG_ARCH_SCUBA) += \
+        #dtbo-$(CONFIG_ARCH_SCUBA) += \
                 scuba-rumi-overlay.dtbo \
                 scuba-idp-overlay.dtbo \
                 scuba-qrd-overlay.dtbo
@@ -139,7 +139,7 @@ scuba-rumi-overlay.dtbo-base := scuba.dtb
 scuba-idp-overlay.dtbo-base := scuba.dtb
 scuba-qrd-overlay.dtbo-base := scuba.dtb
 else
-dtb-$(CONFIG_ARCH_SCUBA) += scuba-rumi.dtb \
+#dtb-$(CONFIG_ARCH_SCUBA) += scuba-rumi.dtb \
 	scuba-idp.dtb \
 	scuba-qrd.dtb
 endif
