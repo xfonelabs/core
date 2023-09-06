@@ -27,7 +27,7 @@
 #include <linux/delay.h>
 #include <linux/oem/boot_mode.h>  // modified to oem by kuppala.rao@oneplus.com
 #include <linux/workqueue.h>
-
+#include <linux/hardware_info.h>
 
 #include "util_interface/touch_interfaces.h"
 #include "tp_devices.h"
@@ -91,6 +91,9 @@
 #define FOCAL_PREFIX        "FT_"
 
 #define FW_UPDATE_DELAY        msecs_to_jiffies(2*1000)
+extern struct drm_panel *lcd_active_panel;
+extern struct drm_panel *tp_active_panel;
+extern char Ctp_name[HARDWARE_MAX_ITEM_LONGTH];
 
 /*********PART3:Struct Area**********************/
 typedef enum {
@@ -127,6 +130,7 @@ typedef enum {
 	MODE_GESTURE,
 	MODE_GLOVE,
 	MODE_CHARGE,
+	MODE_HEADSET,
 	MODE_WIRELESS_CHARGE,
 	MODE_GAME,
 	MODE_EARSENSE,
@@ -321,6 +325,7 @@ struct hw_resource {
 
 	int irq_gpio;                                   /*irq GPIO num*/
 	int reset_gpio;                                 /*Reset GPIO*/
+	int cs_gpio;
 
 	int enable2v8_gpio;                             /*vdd_2v8 enable GPIO*/
 	int enable1v8_gpio;                             /*vcc_1v8 enable GPIO*/
@@ -409,6 +414,12 @@ struct black_gesture_test {
 	char *message;                                 /* failure information if gesture test failed */
 };
 
+enum touch_direction {
+	VERTICAL_SCREEN,
+	LANDSCAPE_SCREEN_90,
+	LANDSCAPE_SCREEN_270,
+};
+
 struct debug_info_proc_operations;
 struct earsense_proc_operations;
 struct touchpanel_data {
@@ -418,6 +429,7 @@ struct touchpanel_data {
 	bool charger_pump_support;                          /*charger_pump support feature*/
 	bool edge_limit_support;                            /*edge_limit support feature*/
 	bool esd_handle_support;                            /*esd handle support feature*/
+	bool fw_edge_limit_support;                         /*edge_limit by FW support feature*/
 	bool spurious_fp_support;                           /*avoid fingerprint spurious trrigger feature*/
 	bool gesture_test_support;                          /*indicate test black gesture or not*/
 	bool game_switch_support;                           /*indicate game switch support or not*/
@@ -514,6 +526,7 @@ struct touchpanel_data {
 
 	struct work_struct     speed_up_work;               /*using for speedup resume*/
 	struct workqueue_struct *speedup_resume_wq;         /*using for touchpanel speedup resume wq*/
+	struct notifier_block notifier_update_fw;
 
 	struct work_struct     read_delta_work;               /*using for read delta*/
 	struct workqueue_struct *delta_read_wq;
@@ -521,6 +534,7 @@ struct touchpanel_data {
 	struct work_struct     async_work;
 	struct workqueue_struct *async_workqueue;
 	struct work_struct     fw_update_work;             /*using for fw update*/
+	struct delayed_work    fw_update_delayed_work;
 	struct delayed_work 	work_read_info;				/*using for print more rawdata when probe*/
 	struct wakeup_source	source;
 

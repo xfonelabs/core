@@ -3904,7 +3904,7 @@ static int syna_tcm_probe(struct i2c_client *client, const struct i2c_device_id 
 	ts->client = client;
 	ts->irq = client->irq;
 	ts->chip_data = tcm_info;
-	ts->has_callback = true;
+	//ts->has_callback = true;
 	ts->use_resume_notify = true;
 	i2c_set_clientdata(client, ts);
 	ts->ts_ops = &syna_tcm_ops;
