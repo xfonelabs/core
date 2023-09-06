@@ -1,6 +1,6 @@
 /***************************************************
  * File:synaptics_common.h
- * Copyright (c)  2008- 2030  Oneplus Mobile communication Corp.ltd.
+ * Copyright (c)  2008- 2030  op Mobile communication Corp.ltd.
  * Description:
  *             synaptics common driver
  * Version:1.0:
