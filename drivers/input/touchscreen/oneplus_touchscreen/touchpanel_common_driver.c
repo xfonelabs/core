@@ -252,10 +252,6 @@ static void tp_touch_down(struct touchpanel_data *ts, struct point_info points, 
                     input_report_abs(ts->input_dev, ABS_MT_TOUCH_MAJOR, SMART_GESTURE_LOW_VALUE);
                 }
             }
-
-            if (ts->pressure_report_support) {
-                input_report_abs(ts->input_dev, ABS_MT_PRESSURE, points.touch_major);   //add for fixing gripview tap no function issue
-            }
         }
         if(!CHK_BIT(ts->irq_slot, (1 << id))) {
             TPD_DETAIL("first touch point id %d [%4d %4d %4d]\n", id, points.x, points.y, points.z);
@@ -4727,7 +4723,7 @@ static int init_input_device(struct touchpanel_data *ts)
     set_bit(ABS_MT_WIDTH_MAJOR, ts->input_dev->absbit);
     set_bit(ABS_MT_POSITION_X, ts->input_dev->absbit);
     set_bit(ABS_MT_POSITION_Y, ts->input_dev->absbit);
-    set_bit(ABS_MT_PRESSURE, ts->input_dev->absbit);
+    //set_bit(ABS_MT_PRESSURE, ts->input_dev->absbit); // Halium Disable MT_Pressure bug: device has min == max on ABS_MT_PRESSURE
     set_bit(INPUT_PROP_DIRECT, ts->input_dev->propbit);
     set_bit(BTN_TOUCH, ts->input_dev->keybit);
     if (ts->black_gesture_support) {
