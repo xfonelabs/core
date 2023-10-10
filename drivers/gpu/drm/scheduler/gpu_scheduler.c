@@ -846,7 +846,7 @@ static bool drm_sched_blocked(struct drm_gpu_scheduler *sched)
  */
 static int drm_sched_main(void *param)
 {
-	struct sched_param sparam = {.sched_priority = 16};
+	struct sched_param sparam = {.sched_priority = 1};
 	struct drm_gpu_scheduler *sched = (struct drm_gpu_scheduler *)param;
 	int r;
 
